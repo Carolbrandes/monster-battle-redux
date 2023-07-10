@@ -9,11 +9,13 @@ import {
 const getAll = async (): Promise<Monster[]> =>
   await fetch(`${API_URL}/monsters`).then((response) => response.json());
 
-const generateResult = async (data: ResultBody) =>
-  await fetch({
+const generateResult = async (data: ResultBody): Promise<Result> =>
+  await fetch(`${API_URL}/battle`, {
     method: 'POST',
-    url: `${API_URL}/battle`,
-    body: data,
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json;charset=UTF-8',
+    },
   }).then((response) => response.json());
 
 export const MonsterService = {
